@@ -49,6 +49,12 @@ class Travel
      */
     private $cities;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="travels")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function __construct()
     {
         $this->cities = new ArrayCollection();
@@ -142,6 +148,18 @@ class Travel
         if ($this->cities->removeElement($city)) {
             $city->removeTravel($this);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

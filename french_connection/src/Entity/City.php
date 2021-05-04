@@ -65,10 +65,16 @@ class City
      */
     private $travels;
 
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="cities")
+     */
+    private $users;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
         $this->travels = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -210,6 +216,36 @@ class City
     public function removeTravel(Travel $travel): self
     {
         $this->travels->removeElement($travel);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setCities($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getCities() === $this) {
+                $user->setCities(null);
+            }
+        }
 
         return $this;
     }
