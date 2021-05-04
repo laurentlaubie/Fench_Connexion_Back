@@ -41,6 +41,7 @@ class Service
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="services")
+     * @Groups({"browse"})
      */
     private $users;
 
@@ -92,6 +93,7 @@ class Service
 
     /**
      * @return Collection|User[]
+     * 
      */
     public function getUsers(): Collection
     {
