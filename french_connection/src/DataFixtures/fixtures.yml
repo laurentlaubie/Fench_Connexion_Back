@@ -1,0 +1,65 @@
+
+
+App\Entity\Country:
+  country_{1..150}:
+    name: '<country()>'
+    countryCode: '<countryCode()>'
+    flag: 'https://restcountries.eu/data/hrv.svg'
+    createdAt: '<datetime()>'
+    updatedAt: '<datetime()>'
+
+App\Entity\City:
+  city_{1..10}:
+    name: '<city()>'
+    cityCode: '<word()>'
+    latitude: '<latitude()>'
+    longitude: '<longitude()>'
+    createdAt: '<datetime()>'
+    updatedAt: '<datetime()>'
+    country: '@country*'
+
+App\Entity\Service:
+  service_{1..20}:
+    name: '<word()>'
+    createdAt: '<datetime()>'
+    updatedAt: '<datetime()>'
+
+App\Entity\Hobby:
+  hobby_{1..20}:
+    name: '<word()>'
+    createdAt: '<datetime()>'
+    updatedAt: '<datetime()>'
+
+App\Entity\User:
+  user_1:
+    email: 'admin@french.fr'
+    roles: ['ROLE_ADMIN']
+    password: '\$argon2id\$v=19\$m=65536,t=4,p=1\$A6+nP6BV41vYhRxWFZp6qw\$wEeFHIPt3q6XzPWJIGvG0PufZyB3Bm1sJ5oWYW71CKU'
+    username: '<name()>'
+    avatar: 'http://lorempixel.com/250/100/cats/'
+    biography: '<text()>'
+    shortDescription: '<text()>'
+    comment: '<text()>'
+    helper: '<randomNumber()>'
+    status: '<randomNumber()>'
+    createdAt: '<datetime()>'
+    updatedAt: '<datetime()>'
+    hobbies: '5x @hobby_*'
+    services: '5x @service_*'
+    cities: '@city*'
+  user_2:
+    email: 'user@french.fr'
+    roles: ['ROLE_USER']
+    password: '\$argon2id\$v=19\$m=65536,t=4,p=1\$A6+nP6BV41vYhRxWFZp6qw\$wEeFHIPt3q6XzPWJIGvG0PufZyB3Bm1sJ5oWYW71CKU'
+    username: '<name()>'
+    avatar: 'http://lorempixel.com/250/100/cats/'
+    biography: '<text()>'
+    shortDescription: '<text()>'
+    comment: '<text()>'
+    helper: '<randomNumber()>'
+    status: '<randomNumber()>'
+    createdAt: '<datetime()>'
+    updatedAt: '<datetime()>'
+    hobbies: '5x @hobby_*'
+    services: '5x @service_*'
+    cities: '@city*'
