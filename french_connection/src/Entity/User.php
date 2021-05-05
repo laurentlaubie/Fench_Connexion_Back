@@ -19,7 +19,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $id;
 
@@ -43,13 +43,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $avatar;
 
@@ -67,7 +67,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $comment;
 

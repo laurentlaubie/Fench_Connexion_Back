@@ -29,6 +29,20 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/home", name="home_browse", methods={"GET"})
+     */
+    public function homeBrowse(Request $request, UserRepository $userRepository ): Response
+    {
+        $limitParameter = intval($request->query->get('limit'));
+
+        $users = $userRepository->findByLatest($limitParameter);
+        
+        return $this->json($users, 200, [], [
+            'groups' => ['homeBrowse']
+            ]);
+    }
+
+    /**
      * @Route("/{id}", name="read", methods={"GET"}, requirements={"id": "\d+"})
      */
     public function read(User $user): Response
