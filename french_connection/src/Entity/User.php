@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -18,16 +19,19 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"browse", "read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"browse", "read"})
      */
     private $roles = [];
 
@@ -39,31 +43,37 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"browse", "read"})
      */
     private $biography;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"browse", "read"})
      */
     private $shortDescription;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $comment;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"browse", "read"})
      */
     private $helper;
 
@@ -74,11 +84,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"browse", "read"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"browse", "read"})
      */
     private $updatedAt;
 
@@ -116,6 +128,7 @@ class User implements UserInterface
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->hobbies = new ArrayCollection();
         $this->services = new ArrayCollection();
         $this->answers = new ArrayCollection();
