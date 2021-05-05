@@ -6,6 +6,7 @@ use App\Repository\HobbyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=HobbyRepository::class)
@@ -16,21 +17,25 @@ class Hobby
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"browse"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"browse"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"browse"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"browse"})
      */
     private $updatedAt;
 
@@ -41,6 +46,7 @@ class Hobby
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->users = new ArrayCollection();
     }
 

@@ -67,6 +67,7 @@ class City
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="cities")
+     * 
      */
     private $users;
 

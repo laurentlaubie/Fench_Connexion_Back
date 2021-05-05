@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!{% endblock %}
+
+{% block body %}
+
+{{ form_start(form) }}
+
+    {{ form_label(form.name)}}
+    {{ form_widget(form.name)}}
+    
+
+    
+    <button>Ajouter</button>
+{{ form_end(form) }}
+
+{% endblock %}
