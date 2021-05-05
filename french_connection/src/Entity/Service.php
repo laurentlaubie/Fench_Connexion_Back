@@ -41,12 +41,12 @@ class Service
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="services")
-     * @Groups({"browse"})
      */
     private $users;
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->users = new ArrayCollection();
     }
 
