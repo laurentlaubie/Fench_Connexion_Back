@@ -48,6 +48,12 @@ class User implements UserInterface
     private $username;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"browse", "read", "homeBrowse"})
+     */
+    private $pseudo;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"browse", "read", "homeBrowse"})
      */
@@ -466,6 +472,18 @@ class User implements UserInterface
                 $travel->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
 
         return $this;
     }

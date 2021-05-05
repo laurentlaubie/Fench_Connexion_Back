@@ -36,6 +36,7 @@ App\Entity\User:
     roles: ['ROLE_ADMIN']
     password: '\$argon2id\$v=19\$m=65536,t=4,p=1\$A6+nP6BV41vYhRxWFZp6qw\$wEeFHIPt3q6XzPWJIGvG0PufZyB3Bm1sJ5oWYW71CKU'
     username: '<name()>'
+    pseudo: '<name()>'
     avatar: 'http://lorempixel.com/250/100/cats/'
     biography: '<text()>'
     shortDescription: '<text()>'
@@ -52,6 +53,7 @@ App\Entity\User:
     roles: ['ROLE_USER']
     password: '\$argon2id\$v=19\$m=65536,t=4,p=1\$A6+nP6BV41vYhRxWFZp6qw\$wEeFHIPt3q6XzPWJIGvG0PufZyB3Bm1sJ5oWYW71CKU'
     username: '<name()>'
+    pseudo: '<name()>'
     avatar: 'http://lorempixel.com/250/100/cats/'
     biography: '<text()>'
     shortDescription: '<text()>'

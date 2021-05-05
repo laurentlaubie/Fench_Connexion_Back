@@ -1,0 +1,15 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Form User admin{% endblock %}
+
+{% block body %}
+
+{{ form_start(form) }}
+    
+    {{ form_label(form.email)}}
+    {{ form_widget(form.email)}}
+    
+{{ form_end(form) }}
+<button>Ajouter</button>
+
+{% endblock %}
