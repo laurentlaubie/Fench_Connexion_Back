@@ -3,8 +3,10 @@
 namespace App\Controller\Api\V1;
 
 use App\Entity\User;
+use App\Form\AvatarEditType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Service\AvatarUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -74,6 +76,35 @@ class UserController extends AbstractController
             ]);
         }
         
+        return $this->json($form->getErrors(true, false)->__toString(), 400);
+    }
+
+    /**
+     * @Route("/avatar", name="avatar_add", methods={"POST"})
+     */
+    public function addAvatar(Request $request, AvatarUploader $avatarUploader): Response
+    {
+        $user = $this->getUser();
+        
+        $form = $this->createForm(AvatarEditType::class, $user, ['csrf_protection' => false]);
+
+        $sentData = json_decode($request->getContent(), true);
+        $form->submit($sentData);
+        dd($sentData);
+
+        if ($form->isValid()) {
+            $image = $form->get('avatar')->getData();
+
+            $newFileName = $avatarUploader->upload($_ENV['AVATAR_PICTURE'], $image);
+
+            
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->json($user, 200, [], [
+                'groups' => ['browse'],
+            ]);
+        }
         return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
 
