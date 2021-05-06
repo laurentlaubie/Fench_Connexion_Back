@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
+
 /**
 * @Route("/api/v1/user", name="api_v1_user_")
 */
@@ -94,7 +95,7 @@ class UserController extends AbstractController
         if ($form->isValid()) {
             $image = $form->get('avatar')->getData();
 
-            $newFileName = $avatarUploader->upload($_ENV['AVATAR_PICTURE'], $image);
+            $newFileName = $avatarUploader->upload($image);
 
             $user->setAvatar($newFileName);
 
