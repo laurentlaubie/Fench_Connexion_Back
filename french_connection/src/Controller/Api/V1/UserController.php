@@ -80,24 +80,23 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/avatar", name="avatar_add", methods={"POST"})
+     * @Route("/avatar/{id}", name="avatar_add", methods={"POST"}, requirements={"id": "\d+"})
      */
-    public function addAvatar(Request $request, AvatarUploader $avatarUploader): Response
+    public function addAvatar(User $user, Request $request, AvatarUploader $avatarUploader): Response
     {
-        $user = $this->getUser();
+        //$user = $this->getUser();
         
         $form = $this->createForm(AvatarEditType::class, $user, ['csrf_protection' => false]);
 
         $sentData = json_decode($request->getContent(), true);
         $form->submit($sentData);
-        dd($sentData);
 
         if ($form->isValid()) {
             $image = $form->get('avatar')->getData();
 
             $newFileName = $avatarUploader->upload($_ENV['AVATAR_PICTURE'], $image);
 
-            
+            $user->setAvatar($newFileName);
 
             $this->getDoctrine()->getManager()->flush();
 
