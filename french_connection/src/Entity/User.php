@@ -117,7 +117,6 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"browse", "read"})
      * 
      */
     private $cities;
