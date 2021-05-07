@@ -27,7 +27,9 @@ class UserType extends AbstractType
             //->add('updatedAt')
             //->add('hobbies')
             //->add('services')
-            ->add('cities')
+            //->add('cities')
+            ->add('firstname')
+            ->add('lastname')
         ;
     }
 
