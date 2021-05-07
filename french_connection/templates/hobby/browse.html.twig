@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HobbyController!{% endblock %}
+
+{% block body %}
+
+<div class="example-wrapper">
+    <h1>French Connection</h1>
+
+    {% for hobby in hobbies %}
+        {{ hobby.id }} : {{ hobby.name }}
+    {% endfor %} </br>
+    <img src="/images/avatars/{{ user.avatar }}"/>
+   
+</div>
+{% endblock %}
