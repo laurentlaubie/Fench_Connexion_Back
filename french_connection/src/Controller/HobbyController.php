@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Hobby;
 use App\Form\HobbyType;
 use App\Repository\HobbyRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +17,13 @@ class HobbyController extends AbstractController
     /**
      * @Route("/hobby", name="hobby_browse")
      */
-    public function browse(HobbyRepository $hobbyRepository): Response
+    public function browse(HobbyRepository $hobbyRepository, UserRepository $userRepository): Response
     {
+
         return $this->render('hobby/browse.html.twig', [
             'hobbies' => $hobbyRepository->findAll(),
+            // todo remove the line below (that was a test to display a user avatar) and in template too
+            'user' => $userRepository->find(2),
         ]);
     }
 

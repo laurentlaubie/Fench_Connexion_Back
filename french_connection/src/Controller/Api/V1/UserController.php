@@ -3,7 +3,6 @@
 namespace App\Controller\Api\V1;
 
 use App\Entity\User;
-use App\Form\AvatarEditType;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Service\AvatarUploader;
@@ -15,34 +14,34 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
-* @Route("/api/v1/user", name="api_v1_user_")
-*/
+ * @Route("/api/v1/user", name="api_v1_user_")
+ */
 class UserController extends AbstractController
 {
     /**
      * @Route("", name="browse", methods={"GET"})
      */
-    public function browse(UserRepository $userRepository ): Response
+    public function browse(UserRepository $userRepository): Response
     {
         $users = $userRepository->findAll();
-        
+
         return $this->json($users, 200, [], [
             'groups' => ['browse']
-            ]);
+        ]);
     }
 
     /**
      * @Route("/home", name="home_browse", methods={"GET"})
      */
-    public function homeBrowse(Request $request, UserRepository $userRepository ): Response
+    public function homeBrowse(Request $request, UserRepository $userRepository): Response
     {
         $limitParameter = intval($request->query->get('limit'));
 
         $users = $userRepository->findByLatest($limitParameter);
-        
+
         return $this->json($users, 200, [], [
             'groups' => ['homeBrowse']
-            ]);
+        ]);
     }
 
     /**
@@ -52,7 +51,7 @@ class UserController extends AbstractController
     {
         return $this->json($user, 200, [], [
             'groups' => ['read']
-            ]);
+        ]);
     }
 
     /**
@@ -61,12 +60,12 @@ class UserController extends AbstractController
     public function add(Request $request): Response
     {
         $user = new User();
-        
+
         $form = $this->createForm(UserType::class, $user, ['csrf_protection' => false]);
-        
+
         $sentData = json_decode($request->getContent(), true);
         $form->submit($sentData);
-        
+
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -76,7 +75,7 @@ class UserController extends AbstractController
                 'groups' => ['browse'],
             ]);
         }
-        
+
         return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
 
@@ -85,27 +84,17 @@ class UserController extends AbstractController
      */
     public function addAvatar(User $user, Request $request, AvatarUploader $avatarUploader): Response
     {
-        //$user = $this->getUser();
-        
-        $form = $this->createForm(AvatarEditType::class, $user, ['csrf_protection' => false]);
+        $uploadedFile = $request->files->get('avatar');
 
-        $sentData = json_decode($request->getContent(), true);
-        $form->submit($sentData);
+        $newFileName = $avatarUploader->upload($uploadedFile);
 
-        if ($form->isValid()) {
-            $image = $form->get('avatar')->getData();
+        $user->setAvatar($newFileName);
 
-            $newFileName = $avatarUploader->upload($image);
+        $this->getDoctrine()->getManager()->flush();
 
-            $user->setAvatar($newFileName);
-
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->json($user, 200, [], [
-                'groups' => ['browse'],
-            ]);
-        }
-        return $this->json($form->getErrors(true, false)->__toString(), 400);
+        return $this->json($user, 200, [], [
+            'groups' => ['browse'],
+        ]);
     }
 
     /**
