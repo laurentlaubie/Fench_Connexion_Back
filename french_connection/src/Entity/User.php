@@ -117,6 +117,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"browse", "read"})
      * 
      */
     private $cities;
@@ -128,11 +129,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse", "read"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse", "read"})
      */
     private $lastname;
 
