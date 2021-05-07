@@ -8,8 +8,6 @@
 /var/
 /vendor/
 /public/images/avatars
-/composer.lock
-/composer.json
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
