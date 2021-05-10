@@ -10,8 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/api/v1/user", name="api_v1_user_")
@@ -57,7 +56,7 @@ class UserController extends AbstractController
     /**
      * @Route("", name="add", methods={"POST"})
      */
-    public function add(Request $request): Response
+    public function add(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = new User();
 
@@ -67,6 +66,9 @@ class UserController extends AbstractController
         $form->submit($sentData);
 
         if ($form->isValid()) {
+            $password = $form->get('password')->getData();
+            $user->setPassword($passwordEncoder->encodePassword($user, $password));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
