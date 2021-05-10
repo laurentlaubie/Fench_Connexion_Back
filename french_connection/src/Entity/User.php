@@ -42,7 +42,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"browse", "read", "homeBrowse"})
      */
     private $username;
@@ -75,7 +75,7 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      * @Groups({"browse", "read", "country_read"})
      */
-    private $helper;
+    private $helper = false;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
