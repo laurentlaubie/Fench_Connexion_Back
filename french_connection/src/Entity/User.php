@@ -19,19 +19,19 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse", "read", "homeBrowse"})
+     * @Groups({"browse", "read", "homeBrowse", "country_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "country_read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "country_read"})
      */
     private $roles = [];
 
@@ -49,31 +49,31 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "homeBrowse"})
+     * @Groups({"browse", "read", "homeBrowse", "country_read"})
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "country_read"})
      */
     private $biography;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "country_read"})
      */
     private $shortDescription;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "read", "homeBrowse"})
+     * @Groups({"browse", "read", "homeBrowse", "country_read"})
      */
     private $comment;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "country_read"})
      */
     private $helper;
 
@@ -128,13 +128,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "homeBrowse", "country_read"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read"})
+     * @Groups({"browse", "read", "homeBrowse", "country_read"})
      */
     private $lastname;
 
