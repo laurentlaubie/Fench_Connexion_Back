@@ -57,6 +57,7 @@ class Country
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->cities = new ArrayCollection();
     }
 
