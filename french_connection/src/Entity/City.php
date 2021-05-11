@@ -17,13 +17,13 @@ class City
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "read", "country_read", "homeBrowse"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "read", "country_read", "homeBrowse"})
      */
     private $name;
 
@@ -34,13 +34,13 @@ class City
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "read", "country_read", "homeBrowse"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "read", "country_read", "homeBrowse"})
      */
     private $latitude;
 
@@ -62,6 +62,7 @@ class City
     /**
      * @ORM\ManyToOne(targetEntity=Country::class, inversedBy="cities")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $country;
 

@@ -17,13 +17,13 @@ class Country
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"country_browse", "country_read"})
+     * @Groups({"browse", "read", "homeBrowse", "country_browse", "country_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"country_browse", "country_read"})
+     * @Groups({"browse", "read", "homeBrowse", "country_browse", "country_read"})
      */
     private $name;
 
@@ -57,6 +57,7 @@ class Country
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse", "read"})
      */
     private $frenchName;
 
