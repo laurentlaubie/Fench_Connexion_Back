@@ -55,6 +55,11 @@ class Country
      */
     private $cities;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $frenchName;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -152,6 +157,18 @@ class Country
                 $city->setCountry(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFrenchName(): ?string
+    {
+        return $this->frenchName;
+    }
+
+    public function setFrenchName(?string $frenchName): self
+    {
+        $this->frenchName = $frenchName;
 
         return $this;
     }
