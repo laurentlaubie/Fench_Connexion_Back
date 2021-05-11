@@ -4,6 +4,7 @@ namespace App\Controller\Api\V1;
 
 use App\Entity\User;
 use App\Form\UserEditType;
+use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Service\AvatarUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
