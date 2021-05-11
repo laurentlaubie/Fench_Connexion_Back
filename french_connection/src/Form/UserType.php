@@ -16,6 +16,10 @@ class UserType extends AbstractType
             ->add('email')
             //->add('roles')
             ->add('password')
+            ->add('confirmedPassword', null, [
+                'mapped' => false,
+                'required' => true,
+            ])
             //->add('username')
             //->add('avatar')
             //->add('biography')
