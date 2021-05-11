@@ -4,11 +4,12 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class UserEditType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,22 +19,23 @@ class UserType extends AbstractType
             ->add('password')
             ->add('confirmedPassword', null, [
                 'mapped' => false,
-                'required' => true,
             ])
             //->add('username')
             //->add('avatar')
-            //->add('biography')
+            ->add('biography')
             //->add('shortDescription')
             //->add('comment')
             //->add('helper')
             //->add('status')
+            ->add('firstname')
+            ->add('lastname')
+            //->add('phoneNumber')
+            ->add('nickname')
             //->add('createdAt')
             //->add('updatedAt')
             //->add('hobbies')
             //->add('services')
-            //->add('cities')
-            ->add('firstname')
-            ->add('lastname')
+            ->add('cities')
         ;
     }
 

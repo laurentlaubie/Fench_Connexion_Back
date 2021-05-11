@@ -3,7 +3,7 @@
 namespace App\Controller\Api\V1;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\UserEditType;
 use App\Repository\UserRepository;
 use App\Service\AvatarUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,15 +67,19 @@ class UserController extends AbstractController
 
         if ($form->isValid()) {
             $password = $form->get('password')->getData();
-            $user->setPassword($passwordEncoder->encodePassword($user, $password));
+            $confirmedPassword = $form->get('confirmedPassword')->getData();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            if ($password === $confirmedPassword) {
+                $user->setPassword($passwordEncoder->encodePassword($user, $password));
 
-            return $this->json($user, 201, [], [
-                'groups' => ['browse'],
-            ]);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+
+                return $this->json($user, 201, [], [
+                    'groups' => ['browse'],
+                ]);
+            } 
         }
 
         return $this->json($form->getErrors(true, false)->__toString(), 400);
@@ -102,19 +106,26 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
      */
-    public function edit(User $user, Request $request): Response
+    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $form = $this->createForm(UserType::class, $user, ['csrf_protection' => false]);
+        $form = $this->createForm(UserEditType::class, $user, ['csrf_protection' => false]);
 
         $sentData = json_decode($request->getContent(), true);
         $form->submit($sentData);
 
         if ($form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $password = $form->get('password')->getData();
+            $user->setPassword($passwordEncoder->encodePassword($user, $password));
+            $confirmedPassword = $form->get('confirmedPassword')->getData();
+            $user->setPassword($passwordEncoder->encodePassword($user, $confirmedPassword));
 
-            return $this->json($user, 200, [], [
-                'groups' => ['read'],
-            ]);
+                if($password === $confirmedPassword) {
+                    $this->getDoctrine()->getManager()->flush();
+                    
+                    return $this->json($user, 200, [], [
+                        'groups' => ['read'],
+                    ]);
+                }
         }
         return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
