@@ -31,7 +31,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "country_read"})
      */
     private $roles = [];
 
@@ -43,7 +43,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $username;
 
@@ -61,13 +60,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "country_read"})
      */
     private $shortDescription;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "read", "homeBrowse", "country_read"})
+     * @Groups({"browse", "country_read"})
      */
     private $comment;
 
@@ -83,6 +82,31 @@ class User implements UserInterface
     private $status;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse", "read", "country_read"})
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse", "read", "country_read"})
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse", "read"})
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse", "homeBrowse", "read"})
+     */
+    private $nickname;
+
+
+    /**
      * @ORM\Column(type="datetime")
      * @Groups({"browse", "read"})
      */
@@ -90,17 +114,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"browse", "read"})
+     * @Groups({"browse"})
      */
     private $updatedAt;
 
     /**
      * @ORM\ManyToMany(targetEntity=Hobby::class, inversedBy="users")
+     * @Groups({"browse", "read"})
      */
     private $hobbies;
 
     /**
      * @ORM\ManyToMany(targetEntity=Service::class, inversedBy="users")
+     * @Groups({"browse", "read"})
      */
     private $services;
 
@@ -117,7 +143,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity=City::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=true)
-     * 
+     * @Groups({"browse", "read", "homeBrowse"})
      */
     private $cities;
 
@@ -125,23 +151,6 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Travel::class, mappedBy="user")
      */
     private $travels;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "homeBrowse", "country_read"})
-     */
-    private $firstname;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "homeBrowse", "country_read"})
-     */
-    private $lastname;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $phoneNumber;
 
     public function __construct()
     {
@@ -519,6 +528,18 @@ class User implements UserInterface
     public function setPhoneNumber(?string $phoneNumber): self
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getNickname(): ?string
+    {
+        return $this->nickname;
+    }
+
+    public function setNickname(?string $nickname): self
+    {
+        $this->nickname = $nickname;
 
         return $this;
     }
