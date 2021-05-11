@@ -17,25 +17,23 @@ class Hobby
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse"})
+     * @Groups({"browse", "read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse"})
+     * @Groups({"browse", "read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"browse"})
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"browse"})
      */
     private $updatedAt;
 
