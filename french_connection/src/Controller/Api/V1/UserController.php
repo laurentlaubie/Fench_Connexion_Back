@@ -67,15 +67,19 @@ class UserController extends AbstractController
 
         if ($form->isValid()) {
             $password = $form->get('password')->getData();
-            $user->setPassword($passwordEncoder->encodePassword($user, $password));
+            $confirmedPassword = $form->get('confirmedPassword')->getData();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            if ($password === $confirmedPassword) {
+                $user->setPassword($passwordEncoder->encodePassword($user, $password));
 
-            return $this->json($user, 201, [], [
-                'groups' => ['browse'],
-            ]);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+
+                return $this->json($user, 201, [], [
+                    'groups' => ['browse'],
+                ]);
+            } 
         }
 
         return $this->json($form->getErrors(true, false)->__toString(), 400);
