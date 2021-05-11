@@ -49,7 +49,9 @@ class GetCountriesCommand extends Command
             $country->setName($apiCountry->name);
             $country->setCountryCode($apiCountry->alpha2Code);
             $country->setFlag($apiCountry->flag);
+            $country->setFrenchName($apiCountry->translations->fr);
             $this->entityManager->persist($country);
+            
         }
 
         $this->entityManager->flush();
