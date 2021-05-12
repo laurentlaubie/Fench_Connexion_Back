@@ -141,4 +141,17 @@ class UserController extends AbstractController
 
         return $this->json(null, 204);
     }
+
+    /**
+     * @Route("/avatar/delete/{id}", name="avatar_delete", methods={"DELETE"}, requirements={"id": "\d+"})
+     */
+    public function deleteAvatar(User $user): Response
+    {
+        $userAvatar = $user->getAvatar();
+
+        $user->setAvatar(null);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json(null, 204);
+    }
 }
