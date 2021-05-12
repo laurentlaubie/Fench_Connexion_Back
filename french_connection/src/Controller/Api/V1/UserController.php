@@ -96,9 +96,11 @@ class UserController extends AbstractController
      */
     public function addAvatar(User $user, Request $request, AvatarUploader $avatarUploader): Response
     {
-        $uploadedFile = $request->files->get('avatar');
+        $userId = $user->getId();
 
-        $newFileName = $avatarUploader->upload($uploadedFile);
+        $uploadedFile = $request->files->get('avatar');
+        
+        $newFileName = $avatarUploader->upload($uploadedFile, $userId);
 
         $user->setAvatar($newFileName);
 
@@ -153,14 +155,19 @@ class UserController extends AbstractController
     public function deleteAvatar(User $user, Filesystem $filesystem): Response
     {
         $userAvatar = $user->getAvatar();
-        $targetDirectory = $_ENV['AVATAR_PICTURE'];
-        $path = $targetDirectory . '/' . $userAvatar;
 
-        $filesystem->remove($path);
+        if ($userAvatar != NULL) {
+            $targetDirectory = $_ENV['AVATAR_PICTURE'];
+            $path = $targetDirectory . '/' . $userAvatar;
+            $filesystem->remove($path);
+    
+            $user->setAvatar(null);
+            $this->getDoctrine()->getManager()->flush();
+    
+            return $this->json(null, 204);
+        }
 
-        $user->setAvatar(null);
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->json(null, 204);
+        return $this->json('No avatar found for this user', 404);
+        
     }
 }
