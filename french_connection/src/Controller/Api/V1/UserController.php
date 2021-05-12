@@ -8,6 +8,7 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Service\AvatarUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -96,10 +97,12 @@ class UserController extends AbstractController
     public function addAvatar(User $user, Request $request, AvatarUploader $avatarUploader): Response
     {
         $this->denyAccessUnlessGranted('addAvatar', $user);
-        
-        $uploadedFile = $request->files->get('avatar');
 
-        $newFileName = $avatarUploader->upload($uploadedFile);
+        $userId = $user->getId();
+
+        $uploadedFile = $request->files->get('avatar');
+        
+        $newFileName = $avatarUploader->upload($uploadedFile, $userId);
 
         $user->setAvatar($newFileName);
 
@@ -150,5 +153,27 @@ class UserController extends AbstractController
         $em->flush();
 
         return $this->json(null, 204);
+    }
+
+    /**
+     * @Route("/avatar/delete/{id}", name="avatar_delete", methods={"DELETE"}, requirements={"id": "\d+"})
+     */
+    public function deleteAvatar(User $user, Filesystem $filesystem): Response
+    {
+        $userAvatar = $user->getAvatar();
+
+        if ($userAvatar != NULL) {
+            $targetDirectory = $_ENV['AVATAR_PICTURE'];
+            $path = $targetDirectory . '/' . $userAvatar;
+            $filesystem->remove($path);
+    
+            $user->setAvatar(null);
+            $this->getDoctrine()->getManager()->flush();
+    
+            return $this->json(null, 204);
+        }
+
+        return $this->json('No avatar found for this user', 404);
+        
     }
 }
