@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello ServiceController!
+{% endblock %}
+
+{% block body %}
+	{{ form_start(form) }}
+	{{ form_row(form.name) }}
+	<button>Ajouter</button>
+	{{ form_end(form) }}
+{% endblock %}
