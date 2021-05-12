@@ -160,6 +160,8 @@ class UserController extends AbstractController
      */
     public function deleteAvatar(User $user, Filesystem $filesystem): Response
     {
+        $this->denyAccessUnlessGranted('deleteAvatar', $user);
+        
         $userAvatar = $user->getAvatar();
 
         if ($userAvatar != NULL) {

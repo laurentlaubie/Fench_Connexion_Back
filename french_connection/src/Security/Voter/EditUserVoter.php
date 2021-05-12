@@ -12,7 +12,7 @@ class EditUserVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, ['edit', 'delete', 'addAvatar'])
+        return in_array($attribute, ['edit', 'delete', 'addAvatar', 'deleteAvatar'])
             && $subject instanceof \App\Entity\User;
     }
 
@@ -44,6 +44,14 @@ class EditUserVoter extends Voter
                 }
                 break;
             case 'addAvatar':
+                if ($subject === $user) {
+                    return true;
+                }
+                if (in_array($user->getUsername(), ['IS_AUTHENTICATED_FULLY'])) {
+                    return true;
+                }
+                break;
+            case 'deleteAvatar':
                 if ($subject === $user) {
                     return true;
                 }
