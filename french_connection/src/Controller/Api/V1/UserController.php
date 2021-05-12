@@ -8,6 +8,7 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Service\AvatarUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -145,9 +146,11 @@ class UserController extends AbstractController
     /**
      * @Route("/avatar/delete/{id}", name="avatar_delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
-    public function deleteAvatar(User $user): Response
+    public function deleteAvatar(User $user, Filesystem $filesystem): Response
     {
         $userAvatar = $user->getAvatar();
+        
+        $filesystem->remove($userAvatar, $_ENV['AVATAR_PICTURE']);
 
         $user->setAvatar(null);
         $this->getDoctrine()->getManager()->flush();
