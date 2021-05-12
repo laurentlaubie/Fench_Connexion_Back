@@ -113,6 +113,8 @@ class UserController extends AbstractController
      */
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        $this->denyAccessUnlessGranted('edit', $user);
+        
         $form = $this->createForm(UserEditType::class, $user, ['csrf_protection' => false]);
 
         $sentData = json_decode($request->getContent(), true);
