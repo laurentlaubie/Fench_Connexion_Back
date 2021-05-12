@@ -95,6 +95,8 @@ class UserController extends AbstractController
      */
     public function addAvatar(User $user, Request $request, AvatarUploader $avatarUploader): Response
     {
+        $this->denyAccessUnlessGranted('addAvatar', $user);
+        
         $uploadedFile = $request->files->get('avatar');
 
         $newFileName = $avatarUploader->upload($uploadedFile);
@@ -141,6 +143,8 @@ class UserController extends AbstractController
      */
     public function delete(User $user): Response
     {
+        $this->denyAccessUnlessGranted('delete', $user);
+        
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
