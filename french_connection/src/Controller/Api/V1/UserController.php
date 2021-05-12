@@ -155,14 +155,19 @@ class UserController extends AbstractController
     public function deleteAvatar(User $user, Filesystem $filesystem): Response
     {
         $userAvatar = $user->getAvatar();
-        $targetDirectory = $_ENV['AVATAR_PICTURE'];
-        $path = $targetDirectory . '/' . $userAvatar;
 
-        $filesystem->remove($path);
+        if ($userAvatar != NULL) {
+            $targetDirectory = $_ENV['AVATAR_PICTURE'];
+            $path = $targetDirectory . '/' . $userAvatar;
+            $filesystem->remove($path);
+    
+            $user->setAvatar(null);
+            $this->getDoctrine()->getManager()->flush();
+    
+            return $this->json(null, 204);
+        }
 
-        $user->setAvatar(null);
-        $this->getDoctrine()->getManager()->flush();
-
-        return $this->json(null, 204);
+        return $this->json('No avatar found for this user', 404);
+        
     }
 }
