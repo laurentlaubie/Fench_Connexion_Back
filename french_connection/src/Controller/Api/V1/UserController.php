@@ -96,6 +96,8 @@ class UserController extends AbstractController
      */
     public function addAvatar(User $user, Request $request, AvatarUploader $avatarUploader): Response
     {
+        $this->denyAccessUnlessGranted('addAvatar', $user);
+
         $userId = $user->getId();
 
         $uploadedFile = $request->files->get('avatar');
@@ -116,6 +118,8 @@ class UserController extends AbstractController
      */
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
+        $this->denyAccessUnlessGranted('edit', $user);
+        
         $form = $this->createForm(UserEditType::class, $user, ['csrf_protection' => false]);
 
         $sentData = json_decode($request->getContent(), true);
@@ -142,6 +146,8 @@ class UserController extends AbstractController
      */
     public function delete(User $user): Response
     {
+        $this->denyAccessUnlessGranted('delete', $user);
+        
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
@@ -154,6 +160,8 @@ class UserController extends AbstractController
      */
     public function deleteAvatar(User $user, Filesystem $filesystem): Response
     {
+        $this->denyAccessUnlessGranted('deleteAvatar', $user);
+        
         $userAvatar = $user->getAvatar();
 
         if ($userAvatar != NULL) {
