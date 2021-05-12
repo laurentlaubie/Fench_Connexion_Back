@@ -37,6 +37,10 @@ class UserController extends AbstractController
     {
         $limitParameter = intval($request->query->get('limit'));
 
+        if ($limitParameter == 0) {
+            $limitParameter = 4;
+        }
+
         $users = $userRepository->findByLatest($limitParameter);
 
         return $this->json($users, 200, [], [
