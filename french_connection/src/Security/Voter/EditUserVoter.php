@@ -12,13 +12,14 @@ class EditUserVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, ['POST_EDIT', 'POST_VIEW'])
-            && $subject instanceof \App\Entity\EditUser;
+        return in_array($attribute, ['edit', 'delete', 'addAvatar'])
+            && $subject instanceof \App\Entity\User;
     }
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
+        //dd($token->getUser());
         // if the user is anonymous, do not grant access
         if (!$user instanceof UserInterface) {
             return false;
@@ -26,13 +27,29 @@ class EditUserVoter extends Voter
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
-            case 'POST_EDIT':
-                // logic to determine if the user can EDIT
-                // return true or false
+            case 'edit':
+                if ($subject === $user) {
+                    return true;
+                }
+                if (in_array($user->getUsername(), ['IS_AUTHENTICATED_FULLY'])) {
+                    return true;
+                }
                 break;
-            case 'POST_VIEW':
-                // logic to determine if the user can VIEW
-                // return true or false
+            case 'delete':
+                if ($subject === $user) {
+                    return true;
+                }
+                if (in_array($user->getUsername(), ['IS_AUTHENTICATED_FULLY'])) {
+                    return true;
+                }
+                break;
+            case 'addAvatar':
+                if ($subject === $user) {
+                    return true;
+                }
+                if (in_array($user->getUsername(), ['IS_AUTHENTICATED_FULLY'])) {
+                    return true;
+                }
                 break;
         }
 
