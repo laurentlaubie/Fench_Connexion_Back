@@ -96,9 +96,11 @@ class UserController extends AbstractController
      */
     public function addAvatar(User $user, Request $request, AvatarUploader $avatarUploader): Response
     {
-        $uploadedFile = $request->files->get('avatar');
+        $userId = $user->getId();
 
-        $newFileName = $avatarUploader->upload($uploadedFile);
+        $uploadedFile = $request->files->get('avatar');
+        
+        $newFileName = $avatarUploader->upload($uploadedFile, $userId);
 
         $user->setAvatar($newFileName);
 
