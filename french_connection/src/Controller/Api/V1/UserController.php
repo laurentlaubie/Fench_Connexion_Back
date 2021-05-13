@@ -156,7 +156,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/avatar/delete/{id}", name="avatar_delete", methods={"DELETE"}, requirements={"id": "\d+"})
+     * @Route("/avatar/{id}", name="avatar_delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
     public function deleteAvatar(User $user, Filesystem $filesystem): Response
     {
