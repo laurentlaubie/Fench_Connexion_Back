@@ -83,7 +83,7 @@ class UserController extends AbstractController
                 $em->flush();
 
                 return $this->json($user, 201, [], [
-                    'groups' => ['browse'],
+                    'groups' => ['add'],
                 ]);
             } 
         }
@@ -109,7 +109,7 @@ class UserController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         return $this->json($user, 200, [], [
-            'groups' => ['browse'],
+            'groups' => ['avatarAdd'],
         ]);
     }
 
@@ -144,10 +144,18 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
-    public function delete(User $user): Response
+    public function delete(User $user, Filesystem $filesystem): Response
     {
         $this->denyAccessUnlessGranted('delete', $user);
         
+        $userAvatar = $user->getAvatar();
+
+        if ($userAvatar != NULL) {
+            $targetDirectory = $_ENV['AVATAR_PICTURE'];
+            $path = $targetDirectory . '/' . $userAvatar;
+            $filesystem->remove($path);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
@@ -156,7 +164,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/avatar/delete/{id}", name="avatar_delete", methods={"DELETE"}, requirements={"id": "\d+"})
+     * @Route("/avatar/{id}", name="avatar_delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
     public function deleteAvatar(User $user, Filesystem $filesystem): Response
     {

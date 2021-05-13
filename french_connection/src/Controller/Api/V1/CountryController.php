@@ -20,7 +20,7 @@ class CountryController extends AbstractController
     {
         $countries = $countryRepository->findAll();
         return $this->json($countries, 200, [], [
-            'groups' => ['country_browse']
+            'groups' => ['countryBrowse']
             ]);
     }
 
@@ -30,7 +30,7 @@ class CountryController extends AbstractController
     public function read(Country $country): Response
     {
         return $this->json($country, 200, [], [
-            'groups' => ['country_read']
+            'groups' => ['countryRead']
         ]);
     }
 }
