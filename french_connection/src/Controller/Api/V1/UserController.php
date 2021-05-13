@@ -144,10 +144,18 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"}, requirements={"id": "\d+"})
      */
-    public function delete(User $user): Response
+    public function delete(User $user, Filesystem $filesystem): Response
     {
         $this->denyAccessUnlessGranted('delete', $user);
         
+        $userAvatar = $user->getAvatar();
+
+        if ($userAvatar != NULL) {
+            $targetDirectory = $_ENV['AVATAR_PICTURE'];
+            $path = $targetDirectory . '/' . $userAvatar;
+            $filesystem->remove($path);
+        }
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
