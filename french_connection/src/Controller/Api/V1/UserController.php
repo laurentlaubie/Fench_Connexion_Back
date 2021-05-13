@@ -83,7 +83,7 @@ class UserController extends AbstractController
                 $em->flush();
 
                 return $this->json($user, 201, [], [
-                    'groups' => ['browse'],
+                    'groups' => ['add'],
                 ]);
             } 
         }
@@ -109,7 +109,7 @@ class UserController extends AbstractController
         $this->getDoctrine()->getManager()->flush();
 
         return $this->json($user, 200, [], [
-            'groups' => ['browse'],
+            'groups' => ['avatarAdd'],
         ]);
     }
 

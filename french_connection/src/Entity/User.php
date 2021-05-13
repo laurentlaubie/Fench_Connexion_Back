@@ -19,19 +19,19 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse", "read", "homeBrowse", "country_read"})
+     * @Groups({"browse", "read", "homeBrowse", "add", "avatarAdd", "countryRead"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "read", "countryRead", "add"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"browse", "country_read"})
+     * @Groups({"browse", "countryRead", "add"})
      */
     private $roles = [];
 
@@ -48,31 +48,31 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "homeBrowse", "country_read"})
+     * @Groups({"browse", "read", "homeBrowse", "countryRead", "avatarAdd"})
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "read", "countryRead"})
      */
     private $biography;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "country_read"})
+     * @Groups({"browse", "countryRead"})
      */
     private $shortDescription;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "country_read"})
+     * @Groups({"browse", "countryRead"})
      */
     private $comment;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "read", "countryRead"})
      */
     private $helper = false;
 
@@ -83,13 +83,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "read", "add", "countryRead"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "country_read"})
+     * @Groups({"browse", "read", "add", "countryRead"})
      */
     private $lastname;
 

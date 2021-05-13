@@ -17,25 +17,25 @@ class Country
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse", "read", "homeBrowse", "country_browse", "country_read"})
+     * @Groups({"browse", "read", "homeBrowse", "countryBrowse", "countryRead"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse", "read", "homeBrowse", "country_browse", "country_read"})
+     * @Groups({"browse", "read", "homeBrowse", "countryBrowse", "countryRead"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"country_browse", "country_read"})
+     * @Groups({"countryBrowse", "countryRead"})
      */
     private $countryCode;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"country_browse", "country_read"})
+     * @Groups({"countryBrowse", "countryRead"})
      */
     private $flag;
 
@@ -51,7 +51,7 @@ class Country
 
     /**
      * @ORM\OneToMany(targetEntity=City::class, mappedBy="country")
-     * @Groups({"country_read"})
+     * @Groups({"countryRead"})
      */
     private $cities;
 
