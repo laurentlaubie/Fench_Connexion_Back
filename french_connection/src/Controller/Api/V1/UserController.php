@@ -85,7 +85,7 @@ class UserController extends AbstractController
                 return $this->json($user, 201, [], [
                     'groups' => ['add'],
                 ]);
-            } 
+            }
         }
 
         return $this->json($form->getErrors(true, false)->__toString(), 400);
@@ -101,7 +101,7 @@ class UserController extends AbstractController
         $userId = $user->getId();
 
         $uploadedFile = $request->files->get('avatar');
-        
+
         $newFileName = $avatarUploader->upload($uploadedFile, $userId);
 
         $user->setAvatar($newFileName);
@@ -119,24 +119,33 @@ class UserController extends AbstractController
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $this->denyAccessUnlessGranted('edit', $user);
-        
+
         $form = $this->createForm(UserEditType::class, $user, ['csrf_protection' => false]);
 
         $sentData = json_decode($request->getContent(), true);
         $form->submit($sentData);
 
+        
+
         if ($form->isValid()) {
+            //todo : clean this code
             $password = $form->get('password')->getData();
-            $confirmedPassword = $form->get('confirmedPassword')->getData();
-            
-            if($password === $confirmedPassword) {
+            if ($password !== null) {
+                $confirmedPassword = $form->get('confirmedPassword')->getData();
+                if ($password === $confirmedPassword) {
                     $user->setPassword($passwordEncoder->encodePassword($user, $confirmedPassword));
-                    $this->getDoctrine()->getManager()->flush();
-                    
-                    return $this->json($user, 200, [], [
-                        'groups' => ['read'],
-                    ]);
                 }
+                else
+                {
+                    return $this->json('the 2 passwords are differents', 404);
+                }
+            }
+                $this->getDoctrine()->getManager()->flush();
+
+                return $this->json($user, 200, [], [
+                    'groups' => ['read'],
+                ]);
+            
         }
         return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
@@ -147,7 +156,7 @@ class UserController extends AbstractController
     public function delete(User $user, Filesystem $filesystem): Response
     {
         $this->denyAccessUnlessGranted('delete', $user);
-        
+
         $userAvatar = $user->getAvatar();
 
         if ($userAvatar != NULL) {
@@ -169,21 +178,20 @@ class UserController extends AbstractController
     public function deleteAvatar(User $user, Filesystem $filesystem): Response
     {
         $this->denyAccessUnlessGranted('deleteAvatar', $user);
-        
+
         $userAvatar = $user->getAvatar();
 
         if ($userAvatar != NULL) {
             $targetDirectory = $_ENV['AVATAR_PICTURE'];
             $path = $targetDirectory . '/' . $userAvatar;
             $filesystem->remove($path);
-    
+
             $user->setAvatar(null);
             $this->getDoctrine()->getManager()->flush();
-    
+
             return $this->json(null, 204);
         }
 
         return $this->json('No avatar found for this user', 404);
-        
     }
 }
