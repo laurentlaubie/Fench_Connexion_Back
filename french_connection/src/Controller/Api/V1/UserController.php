@@ -117,7 +117,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
      */
-    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, CountryRepository $countryRepository): Response
     {
         $this->denyAccessUnlessGranted('edit', $user);
 
@@ -131,6 +131,21 @@ class UserController extends AbstractController
         if ($form->isValid()) {
             //todo : clean this code
             $password = $form->get('password')->getData();
+
+            $cities = explode(", ", $form->get('cities')->getData());
+            
+            $country = $countryRepository->findByCountry($cities[1]);
+            
+            $countryId = $country[0]->getId();
+            dd($countryId);
+            // todo : créer une requete custom findByCity dans CityRepository 
+            // Si elle y'est pas on l'ajoute
+                //todo : créer un CityController, créer une méthode add qui permet d'ajouter la ville en DB (en rattachant le countryId en argument)
+                // appeler la méthode add ici
+                // Une fois la ville ajoutée en DB, on appelle son ID et on fait user->setCity($id) en gros
+            // Si elle y'est on récupère son Id et on fait user->setCity($id) en gros
+            
+        
             if ($password !== null) {
                 $confirmedPassword = $form->get('confirmedPassword')->getData();
                 if ($password === $confirmedPassword) {
