@@ -3,15 +3,16 @@
 namespace App\Controller\Api\V1;
 
 use App\Entity\User;
-use App\Form\UserEditType;
 use App\Form\UserType;
-use App\Repository\UserRepository;
+use App\Form\UserEditType;
 use App\Service\AvatarUploader;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\UserRepository;
+use App\Repository\CountryRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -193,5 +194,19 @@ class UserController extends AbstractController
         }
 
         return $this->json('No avatar found for this user', 404);
+    }
+
+    /**
+     * @Route("/search", name="search", methods={"GET"})
+     */
+    public function search(CountryRepository $countryRepository, UserRepository $userRepository, Request $request): Response
+    {
+        $countryParameter = $request->query->get('country');
+
+        $users = $countryRepository->findByCountry($countryParameter);
+
+        return $this->json($users, 200, [], [
+            'groups' => ['searchResults']
+        ]);
     }
 }
