@@ -126,7 +126,7 @@ class UserController extends AbstractController
         $sentData = json_decode($request->getContent(), true);
         $form->submit($sentData);
 
-        
+
 
         if ($form->isValid()) {
             //todo : clean this code
@@ -135,18 +135,15 @@ class UserController extends AbstractController
                 $confirmedPassword = $form->get('confirmedPassword')->getData();
                 if ($password === $confirmedPassword) {
                     $user->setPassword($passwordEncoder->encodePassword($user, $confirmedPassword));
-                }
-                else
-                {
+                } else {
                     return $this->json('the 2 passwords are differents', 404);
                 }
             }
-                $this->getDoctrine()->getManager()->flush();
+            $this->getDoctrine()->getManager()->flush();
 
-                return $this->json($user, 200, [], [
-                    'groups' => ['read'],
-                ]);
-            
+            return $this->json($user, 200, [], [
+                'groups' => ['read'],
+            ]);
         }
         return $this->json($form->getErrors(true, false)->__toString(), 400);
     }
@@ -199,12 +196,15 @@ class UserController extends AbstractController
     /**
      * @Route("/search", name="search", methods={"GET"})
      */
-    public function search(CountryRepository $countryRepository, UserRepository $userRepository, Request $request): Response
+    public function search(CountryRepository $countryRepository, Request $request): Response
     {
-        $countryParameter = $request->query->get('country');
+        $countryParameter = trim($request->query->get('country'));
 
         $users = $countryRepository->findByCountry($countryParameter);
 
+        if (empty($users)) {
+            return $this->json('Country not found', 404);
+        }
         return $this->json($users, 200, [], [
             'groups' => ['searchResults']
         ]);
