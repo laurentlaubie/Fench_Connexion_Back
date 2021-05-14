@@ -17,13 +17,13 @@ class City
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse", "read", "countryRead", "homeBrowse"})
+     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse", "read", "countryRead", "homeBrowse"})
+     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults"})
      */
     private $name;
 
@@ -34,13 +34,13 @@ class City
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"browse", "read", "countryRead", "homeBrowse"})
+     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"browse", "read", "countryRead", "homeBrowse"})
+     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults"})
      */
     private $latitude;
 
@@ -73,7 +73,7 @@ class City
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="cities")
-     * @Groups({"countryRead"})
+     * @Groups({"countryRead", "searchResults"})
      */
     private $users;
 

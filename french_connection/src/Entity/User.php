@@ -19,13 +19,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse", "read", "homeBrowse", "add", "avatarAdd", "countryRead"})
+     * @Groups({"browse", "read", "homeBrowse", "add", "avatarAdd", "countryRead", "searchResults"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"browse", "read", "countryRead", "add"})
+     * @Groups({"browse", "read", "countryRead", "add", "searchResults"})
      */
     private $email;
 
@@ -48,19 +48,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "homeBrowse", "countryRead", "avatarAdd"})
+     * @Groups({"browse", "read", "homeBrowse", "countryRead", "avatarAdd", "searchResults"})
      */
     private $avatar;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "read", "countryRead"})
+     * @Groups({"browse", "read", "countryRead", "searchResults"})
      */
     private $biography;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"browse", "countryRead"})
+     * @Groups({"browse", "countryRead", "searchResults"})
      */
     private $shortDescription;
 
@@ -72,7 +72,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"browse", "read", "countryRead"})
+     * @Groups({"browse", "read", "countryRead", "searchResults"})
      */
     private $helper = false;
 
@@ -101,7 +101,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "homeBrowse", "read"})
+     * @Groups({"browse", "homeBrowse", "read", "searchResults"})
      */
     private $nickname;
 
