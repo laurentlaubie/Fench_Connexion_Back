@@ -17,15 +17,21 @@ class Country
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse", "read", "homeBrowse", "countryBrowse", "countryRead"})
+     * @Groups({"browse", "read", "homeBrowse", "countryBrowse", "countryRead", "searchResults"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse", "read", "homeBrowse", "countryBrowse", "countryRead"})
+     * @Groups({"browse", "read", "homeBrowse", "countryBrowse", "countryRead", "searchResults"})
      */
     private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"browse", "read", "searchResults"})
+     */
+    private $frenchName;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -35,7 +41,7 @@ class Country
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"countryBrowse", "countryRead"})
+     * @Groups({"countryBrowse", "countryRead", "searchResults"})
      */
     private $flag;
 
@@ -51,15 +57,9 @@ class Country
 
     /**
      * @ORM\OneToMany(targetEntity=City::class, mappedBy="country")
-     * @Groups({"countryRead"})
+     * @Groups({"countryRead", "searchResults"})
      */
     private $cities;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read"})
-     */
-    private $frenchName;
 
     public function __construct()
     {
