@@ -16,7 +16,9 @@ class UserEditType extends AbstractType
         $builder
             ->add('email')
             //->add('roles')
-            ->add('password')
+            ->add('password', null, [
+                'mapped' => false,
+            ])
             ->add('confirmedPassword', null, [
                 'mapped' => false,
             ])
