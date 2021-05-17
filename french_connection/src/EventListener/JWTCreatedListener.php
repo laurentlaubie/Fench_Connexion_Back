@@ -28,9 +28,9 @@ class JWTCreatedListener
   public function onJWTCreated(JWTCreatedEvent $event)
   {
     $user = $event->getUser();
-    
+  
     $payload = $event->getData();
-    
+
     $payload['id'] = $user->getId();
     $payload['avatar'] = $user->getAvatar();
     $payload['biography'] = $user->getBiography();
@@ -39,9 +39,35 @@ class JWTCreatedListener
     $payload['nickname'] = $user->getNickname();
     $payload['helper'] = $user->getHelper();
     $payload['phoneNumber'] = $user->getPhoneNumber();
-    $payload['cities'] = $user->getCities();
-    $payload['hobbies'] = $user->getHobbies();
-    $payload['services'] = $user->getServices();
+    $payload['cities'] = array (
+      'id' => $user->getCities()->getId(),
+      'name' => $user->getCities()->getName(),
+      'longitude' => $user->getCities()->getLongitude(),
+      'latitude' => $user->getCities()->getLatitude(),
+    );
+    $payload['countries'] = array (
+      'id' => $user->getCities()->getCountry()->getId(),
+      'name' => $user->getCities()->getCountry()->getName(),
+      'frenchName' => $user->getCities()->getCountry()->getFrenchName(),
+    );
+
+    $services = $user->getServices();
+
+    foreach($services as $service) {
+      $payload['services'][] = array (
+        'id' => $service->getId(),
+        'name' => $service->getName(),
+      );
+    }
+
+    $hobbies = $user->getHobbies();
+
+    foreach($hobbies as $hobby) {
+      $payload['hobbies'][] = array (
+        'id' => $hobby->getId(),
+        'name' => $hobby->getName(),
+      );
+    }
 
     $event->setData($payload);
   }
