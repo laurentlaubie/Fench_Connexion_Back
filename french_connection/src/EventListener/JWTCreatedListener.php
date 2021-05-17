@@ -31,7 +31,7 @@ class JWTCreatedListener
   
     $payload = $event->getData();
 
-    $payload['user'] = $user->getId();
+    $payload['id'] = $user->getId();
     $payload['avatar'] = $user->getAvatar();
     $payload['biography'] = $user->getBiography();
     $payload['firstname'] = $user->getFirstname();
@@ -45,9 +45,14 @@ class JWTCreatedListener
       'longitude' => $user->getCities()->getLongitude(),
       'latitude' => $user->getCities()->getLatitude(),
     );
+    $payload['countries'] = array (
+      'id' => $user->getCities()->getCountry()->getId(),
+      'name' => $user->getCities()->getCountry()->getName(),
+      'frenchName' => $user->getCities()->getCountry()->getFrenchName(),
+    );
     $payload['hobbies'] = $user->getHobbies();
     $payload['services'] = $user->getServices();
-    //dd($user->getServices());
+    
     $event->setData($payload);
   }
 }
