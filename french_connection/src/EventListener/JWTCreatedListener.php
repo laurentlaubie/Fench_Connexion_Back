@@ -34,11 +34,14 @@ class JWTCreatedListener
     $payload['id'] = $user->getId();
     $payload['avatar'] = $user->getAvatar();
     $payload['biography'] = $user->getBiography();
-    $payload['avatar'] = $user->getAvatar();
     $payload['firstname'] = $user->getFirstname();
     $payload['lastname'] = $user->getLastname();
     $payload['nickname'] = $user->getNickname();
     $payload['helper'] = $user->getHelper();
+    $payload['phoneNumber'] = $user->getPhoneNumber();
+    $payload['cities'] = $user->getCities();
+    $payload['hobbies'] = $user->getHobbies();
+    $payload['services'] = $user->getServices();
 
     $event->setData($payload);
   }
