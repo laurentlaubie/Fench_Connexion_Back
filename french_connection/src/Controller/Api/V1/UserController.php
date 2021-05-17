@@ -119,7 +119,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
      */
-    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, CountryRepository $countryRepository, CityRepository $cityRepository, City $city): Response
+    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, CountryRepository $countryRepository, CityRepository $cityRepository): Response
     {
         $this->denyAccessUnlessGranted('edit', $user);
 
