@@ -134,18 +134,18 @@ class UserController extends AbstractController
             //todo : clean this code
             $password = $form->get('password')->getData();
 
-            $cities = explode(", ", $form->get('cities')->getData());
+            $userAdress = $form->get('userAdress')->getData();
 
-            $city = $cityRepository->findByCity($cities[0]);
-            $country = $countryRepository->findByCountry($cities[1]);
+            $city = $cityRepository->findByCity($userAdress[0]);
+            $country = $countryRepository->findByCountry($userAdress[1]);
             
             if(!empty($city)) {
                 $user->setCities($city[0]);
             } else {
                 $city = new City();
-                $city->setName($cities[0]);
-                $city->setLongitude($cities[2]);
-                $city->setLatitude($cities[3]);
+                $city->setName($userAdress[0]);
+                $city->setLongitude($userAdress[3]);
+                $city->setLatitude($userAdress[2]);
                 $city->setCountry($country[0]);
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($city);
