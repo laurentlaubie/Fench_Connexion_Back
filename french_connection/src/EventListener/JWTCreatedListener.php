@@ -50,9 +50,25 @@ class JWTCreatedListener
       'name' => $user->getCities()->getCountry()->getName(),
       'frenchName' => $user->getCities()->getCountry()->getFrenchName(),
     );
-    $payload['hobbies'] = $user->getHobbies();
-    $payload['services'] = $user->getServices();
-    
+
+    $services = $user->getServices();
+
+    foreach($services as $service) {
+      $payload['services'][] = array (
+        'id' => $service->getId(),
+        'name' => $service->getName(),
+      );
+    }
+
+    $hobbies = $user->getHobbies();
+
+    foreach($hobbies as $hobby) {
+      $payload['hobbies'][] = array (
+        'id' => $hobby->getId(),
+        'name' => $hobby->getName(),
+      );
+    }
+
     $event->setData($payload);
   }
 }
