@@ -17,7 +17,6 @@ class AvatarEditType extends AbstractType
                 'mapped' => false,
                 'required' => true,
             ])
-            
         ;
     }
 
