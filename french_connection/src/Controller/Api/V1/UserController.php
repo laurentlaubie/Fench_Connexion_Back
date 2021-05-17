@@ -2,9 +2,11 @@
 
 namespace App\Controller\Api\V1;
 
+use App\Entity\City;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\UserEditType;
+use App\Repository\CityRepository;
 use App\Service\AvatarUploader;
 use App\Repository\UserRepository;
 use App\Repository\CountryRepository;
@@ -117,7 +119,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
      */
-    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, CountryRepository $countryRepository, CityRepository $cityRepository, City $city): Response
     {
         $this->denyAccessUnlessGranted('edit', $user);
 
@@ -131,6 +133,26 @@ class UserController extends AbstractController
         if ($form->isValid()) {
             //todo : clean this code
             $password = $form->get('password')->getData();
+
+            $userAdress = $form->get('userAdress')->getData();
+
+            $city = $cityRepository->findByCity($userAdress[0]);
+            $country = $countryRepository->findByCountry($userAdress[1]);
+            
+            if(!empty($city)) {
+                $user->setCities($city[0]);
+            } else {
+                $city = new City();
+                $city->setName($userAdress[0]);
+                $city->setLongitude($userAdress[3]);
+                $city->setLatitude($userAdress[2]);
+                $city->setCountry($country[0]);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($city);
+                $em->flush();
+                $user->setCities($city);
+            }
+        
             if ($password !== null) {
                 $confirmedPassword = $form->get('confirmedPassword')->getData();
                 if ($password === $confirmedPassword) {

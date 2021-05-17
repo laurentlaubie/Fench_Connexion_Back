@@ -19,6 +19,15 @@ class CityRepository extends ServiceEntityRepository
         parent::__construct($registry, City::class);
     }
 
+    public function findByCity($city)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.name = :city')
+            ->setParameter('city', $city)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return City[] Returns an array of City objects
     //  */
