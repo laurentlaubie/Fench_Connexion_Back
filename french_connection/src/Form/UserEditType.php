@@ -33,7 +33,7 @@ class UserEditType extends AbstractType
             //->add('status')
             ->add('firstname')
             ->add('lastname')
-            //->add('phoneNumber')
+            ->add('phoneNumber')
             ->add('nickname')
             //->add('createdAt')
             //->add('updatedAt')

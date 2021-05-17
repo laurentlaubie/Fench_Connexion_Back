@@ -2,9 +2,11 @@
 
 namespace App\Controller\Api\V1;
 
+use App\Entity\City;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\UserEditType;
+use App\Repository\CityRepository;
 use App\Service\AvatarUploader;
 use App\Repository\UserRepository;
 use App\Repository\CountryRepository;
@@ -117,7 +119,7 @@ class UserController extends AbstractController
     /**
      * @Route("/{id}", name="edit", methods={"PUT", "PATCH"}, requirements={"id": "\d+"})
      */
-    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, CountryRepository $countryRepository): Response
+    public function edit(User $user, Request $request, UserPasswordEncoderInterface $passwordEncoder, CountryRepository $countryRepository, CityRepository $cityRepository, City $city): Response
     {
         $this->denyAccessUnlessGranted('edit', $user);
 
@@ -133,18 +135,23 @@ class UserController extends AbstractController
             $password = $form->get('password')->getData();
 
             $cities = explode(", ", $form->get('cities')->getData());
-            
+
+            $city = $cityRepository->findByCity($cities[0]);
             $country = $countryRepository->findByCountry($cities[1]);
             
-            $countryId = $country[0]->getId();
-            dd($countryId);
-            // todo : créer une requete custom findByCity dans CityRepository 
-            // Si elle y'est pas on l'ajoute
-                //todo : créer un CityController, créer une méthode add qui permet d'ajouter la ville en DB (en rattachant le countryId en argument)
-                // appeler la méthode add ici
-                // Une fois la ville ajoutée en DB, on appelle son ID et on fait user->setCity($id) en gros
-            // Si elle y'est on récupère son Id et on fait user->setCity($id) en gros
-            
+            if(!empty($city)) {
+                $user->setCities($city[0]);
+            } else {
+                $city = new City();
+                $city->setName($cities[0]);
+                $city->setLongitude($cities[2]);
+                $city->setLatitude($cities[3]);
+                $city->setCountry($country[0]);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($city);
+                $em->flush();
+                $user->setCities($city);
+            }
         
             if ($password !== null) {
                 $confirmedPassword = $form->get('confirmedPassword')->getData();

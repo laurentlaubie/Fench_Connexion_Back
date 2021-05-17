@@ -19,6 +19,7 @@ class CountryController extends AbstractController
     public function browse(CountryRepository $countryRepository): Response
     {
         $countries = $countryRepository->findAll();
+        
         return $this->json($countries, 200, [], [
             'groups' => ['countryBrowse']
             ]);

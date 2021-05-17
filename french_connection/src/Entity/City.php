@@ -17,13 +17,13 @@ class City
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults"})
+     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults", "cityBrowse", "cityRead"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults"})
+     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults", "cityBrowse", "cityRead"})
      */
     private $name;
 
@@ -34,13 +34,13 @@ class City
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults"})
+     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults", "cityBrowse", "cityRead"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults"})
+     * @Groups({"browse", "read", "countryRead", "homeBrowse", "searchResults", "cityBrowse", "cityRead"})
      */
     private $latitude;
 
@@ -79,6 +79,7 @@ class City
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->questions = new ArrayCollection();
         $this->travels = new ArrayCollection();
         $this->users = new ArrayCollection();
