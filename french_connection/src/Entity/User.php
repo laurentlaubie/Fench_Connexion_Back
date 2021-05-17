@@ -83,13 +83,13 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "add", "countryRead"})
+     * @Groups({"browse", "read", "add", "countryRead", "searchResults"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"browse", "read", "add", "countryRead"})
+     * @Groups({"browse", "read", "add", "countryRead", "searchResults"})
      */
     private $lastname;
 
