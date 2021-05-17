@@ -28,10 +28,10 @@ class JWTCreatedListener
   public function onJWTCreated(JWTCreatedEvent $event)
   {
     $user = $event->getUser();
-    
+  
     $payload = $event->getData();
-    
-    $payload['id'] = $user->getId();
+
+    $payload['user'] = $user->getId();
     $payload['avatar'] = $user->getAvatar();
     $payload['biography'] = $user->getBiography();
     $payload['firstname'] = $user->getFirstname();
@@ -39,10 +39,15 @@ class JWTCreatedListener
     $payload['nickname'] = $user->getNickname();
     $payload['helper'] = $user->getHelper();
     $payload['phoneNumber'] = $user->getPhoneNumber();
-    $payload['cities'] = $user->getCities();
+    $payload['cities'] = array (
+      'id' => $user->getCities()->getId(),
+      'name' => $user->getCities()->getName(),
+      'longitude' => $user->getCities()->getLongitude(),
+      'latitude' => $user->getCities()->getLatitude(),
+    );
     $payload['hobbies'] = $user->getHobbies();
     $payload['services'] = $user->getServices();
-
+    //dd($user->getServices());
     $event->setData($payload);
   }
 }
