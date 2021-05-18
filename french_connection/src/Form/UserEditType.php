@@ -42,7 +42,7 @@ class UserEditType extends AbstractType
                 'label' => "description",
                 ])*/
             //->add('comment')
-            //->add('helper')
+            ->add('helper')
             //->add('status')
             ->add('firstname', TextType::class, [
             ])
