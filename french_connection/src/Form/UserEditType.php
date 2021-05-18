@@ -22,18 +22,14 @@ class UserEditType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'constraints' => new NotBlank(),
-                'required' => true,
                 'trim' =>true,
             ])
             //->add('roles')
             ->add('password', PasswordType::class, [
-                'constraints' => new NotBlank(),
                 'mapped' => false,
             ])
             ->add('confirmedPassword', null, [
                 'mapped' => false,
-                'required' => true,
             ])
             /*->add('username', null, [
                 'constraints' => new NotBlank(),
@@ -49,14 +45,11 @@ class UserEditType extends AbstractType
             //->add('helper')
             //->add('status')
             ->add('firstname', TextType::class, [
-                'constraints' => new NotBlank(),
             ])
             ->add('lastname', TextType::class, [
-                'constraints' => new NotBlank(),
             ])
             ->add('phoneNumber')
             ->add('nickname', TextType::class, [
-                'constraints' => new NotBlank(),
             ])
             //->add('createdAt')
             //->add('updatedAt')
