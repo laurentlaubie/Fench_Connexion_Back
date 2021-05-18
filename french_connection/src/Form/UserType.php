@@ -30,9 +30,9 @@ class UserType extends AbstractType
                 'mapped' => false,
                 'required' => true,
             ])
-            ->add('username', null, [
+            /*->add('username', null, [
                 'constraints' => new NotBlank(),
-            ])
+            ])*/
             /*->add('avatar', FileType::class, [
                 'mapped' => false,
             ])
