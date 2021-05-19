@@ -1,0 +1,17 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+    <h2>Liste des utilisateurs</h2>
+
+    {% for user in users %}
+        <div class="card bg-light mb-3" style="max-width: 20rem;">
+            <div class="card-header">{{ user.nickname }}</div>
+            <div class="card-body">
+            <h4 class="card-title">{{ user.firstname }} {{ user.lastname }}</h4>
+            <p class="card-text">{{ user.biography }}</p>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
