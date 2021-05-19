@@ -64,20 +64,28 @@ class JWTCreatedListener
 
     $services = $user->getServices();
 
-    foreach($services as $service) {
-      $payload['services'][] = array (
+    if (count($services) > 0) {
+        foreach ($services as $service) {
+            $payload['services'][] = array(
         'id' => $service->getId(),
         'name' => $service->getName(),
       );
+        }
+    } else {
+      $payload['services'] =[];
     }
 
     $hobbies = $user->getHobbies();
 
-    foreach($hobbies as $hobby) {
-      $payload['hobbies'][] = array (
+    if (count($hobbies) > 0) {
+        foreach ($hobbies as $hobby) {
+            $payload['hobbies'][] = array(
         'id' => $hobby->getId(),
         'name' => $hobby->getName(),
       );
+        }
+    } else {
+      $payload['hobbies'] =[];
     }
 
     $event->setData($payload);
