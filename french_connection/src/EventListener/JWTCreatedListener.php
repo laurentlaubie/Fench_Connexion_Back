@@ -39,17 +39,28 @@ class JWTCreatedListener
     $payload['nickname'] = $user->getNickname();
     $payload['helper'] = $user->getHelper();
     $payload['phoneNumber'] = $user->getPhoneNumber();
-    $payload['cities'] = array (
-      'id' => $user->getCities()->getId(),
-      'name' => $user->getCities()->getName(),
-      'longitude' => $user->getCities()->getLongitude(),
-      'latitude' => $user->getCities()->getLatitude(),
-    );
-    $payload['countries'] = array (
-      'id' => $user->getCities()->getCountry()->getId(),
-      'name' => $user->getCities()->getCountry()->getName(),
-      'frenchName' => $user->getCities()->getCountry()->getFrenchName(),
-    );
+
+    if (!empty($user->getCities())) {
+      $payload['cities'] = array (
+        'id' => $user->getCities()->getId(),
+        'name' => $user->getCities()->getName(),
+        'longitude' => $user->getCities()->getLongitude(),
+        'latitude' => $user->getCities()->getLatitude(),
+      );
+    } else {
+      $payload['cities'] =[];
+    }
+    
+    if (!empty($user->getCities())) {
+      $payload['countries'] = array (
+        'id' => $user->getCities()->getCountry()->getId(),
+        'name' => $user->getCities()->getCountry()->getName(),
+        'frenchName' => $user->getCities()->getCountry()->getFrenchName(),
+      );
+    } else {
+      $payload['countries'] =[];
+    }
+    
 
     $services = $user->getServices();
 
