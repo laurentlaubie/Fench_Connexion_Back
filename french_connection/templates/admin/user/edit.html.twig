@@ -1,13 +1,13 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Hello ServiceController!
+{% block title %}Hello UserController!
 {% endblock %}
 
 {% block body %}
-	<h2>Modification d'un service</h2>
+	<h2>Modification d'un utilisateur</h2>
 	
 	{{ form_start(form) }}
-	{{ form_row(form.name) }}
+	{{ form_row(form.firstname) }}
 	<button>Modifier</button>
 	{{ form_end(form) }}
 {% endblock %}

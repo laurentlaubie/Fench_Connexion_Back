@@ -57,18 +57,36 @@ class UserController extends AbstractController
      */
     public function edit(User $user, Request $request): Response
     {
-        return $this->render('admin/user/index.html.twig', [
-            'controller_name' => 'UserController',
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setUpdatedAt(new \DateTime());
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'L\'utilisateur ' . $user->getNickname() . ' a bien été modifié');
+
+            return $this->redirectToRoute('admin_user_browse');
+        }
+
+        return $this->render('admin/user/edit.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/delete/{id}", name="delete", requirements={"id": "\d+"}, methods={"DELETE"})
      */
-    public function delete(): Response
+    public function delete(User $user): Response
     {
-        return $this->render('admin/user/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+
+        $this->addFlash('success', 'L\'utilisateur ' . $user->getNickname() . ' a bien été supprimé');
+    
+
+    return $this->redirectToRoute('admin_user_browse');
     }
 }

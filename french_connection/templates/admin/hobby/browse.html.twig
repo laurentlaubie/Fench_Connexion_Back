@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+
+{% block title %}Hello HobbyController!{% endblock %}
+
+{% block body %}
+
+	<a href="{{ path('admin_hobby_add') }}" class="btn btn-primary">Ajouter un hobby</a>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Nom</th>
+				<th scope="col">Date de création</th>
+				<th scope="col">Date de mise à jour</th>
+				<th scope="col">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for hobby in hobbies %}
+				<tr class="table-{{ cycle(['default','dark'], loop.index0) }}">
+					<th scope="row">{{ hobby.id }}</th>
+					<td>
+						{{ hobby.name }}
+					</td>
+					<td>{{ hobby.createdAt|date('d M Y à H:i') }}</td>
+					<td>
+						{{ hobby.updatedAt is not null ? hobby.updatedAt|date('d M Y à H:i') }}
+					</td>
+					<td>
+						<a href="{{ path('admin_hobby_edit', {'id': hobby.id}) }}" class="btn btn-light">Modifier</a>
+						<form action="{{ path('admin_hobby_delete', {'id': hobby.id}) }}" method="post" class="d-inline">
+							<button class="btn btn-danger">Supprimer</button>
+							<input type="hidden" name="_method" value="delete">
+						</form>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+{% endblock %}
