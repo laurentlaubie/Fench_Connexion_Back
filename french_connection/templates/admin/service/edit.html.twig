@@ -6,8 +6,12 @@
 {% block body %}
 	<h2>Modification d'un service</h2>
 	
-	{{ form_start(form) }}
-	{{ form_row(form.name) }}
-	<button>Modifier</button>
+ 	{{ form_start(form) }}
+    	{{ form_label(form.name)}}
+    	{{ form_widget(form.name)}}
+		{{ form_row(form.createdAt)}}
+		{{ form_row(form.updatedAt)}}
+ 	<button class="btn btn-info">Modifier</button>
 	{{ form_end(form) }}
+
 {% endblock %}

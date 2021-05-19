@@ -6,9 +6,10 @@
 {% block body %}
 	<h2>Modification d'un hobby</h2>
     
-    <div class="form-group">
-        <label class="col-form-label mt-4" for="inputDefault">Nom du hobby</label>
-        <input type="text" class="form-control" placeholder="Entrez le nom du hobby" id="inputDefault">
-    </div>
-    <button type="button" class="btn btn-info">Modifier</button>
+ 	{{ form_start(form) }}
+    	{{ form_label(form.name)}}
+    	{{ form_widget(form.name)}}
+ 	<button class="btn btn-info">Ajouter</button>
+	{{ form_end(form) }}
+    
 {% endblock %}

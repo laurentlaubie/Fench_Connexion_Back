@@ -7,9 +7,11 @@
 	<h2>Ajout d'un service</h2>
 	
 	{{ form_start(form) }}
-    	{{ form_label(form.name)}}
-    	{{ form_widget(form.name)}}
- 	<button>Ajouter</button>
+ 
+    	{{ form_row(form.name)}}
+		{{ form_row(form.createdAt)}}
+		{{ form_row(form.updatedAt)}}
+ 	<button class="btn btn-info">Ajouter</button>
 	{{ form_end(form) }}
 	
 {% endblock %}

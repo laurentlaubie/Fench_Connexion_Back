@@ -5,6 +5,8 @@
 {% block body %}
     <h2>Liste des utilisateurs</h2>
 
+    <a href="{{ path('admin_user_add') }}" class="btn btn-primary">Ajouter un utilisateur</a>
+
     {% for user in users %}
         <div class="card bg-light mb-3" style="max-width: 20rem;">
             <div class="card-header">{{ user.nickname }}
