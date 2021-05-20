@@ -43,7 +43,7 @@ class UserType extends AbstractType
                 'label' => "description",
             ])*/
             //->add('comment')
-            //->add('helper')
+            ->add('helper')
             //->add('status')
             //->add('createdAt')
             //->add('updatedAt')
