@@ -42,6 +42,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findByLatest($limit)
     {
         return $this->createQueryBuilder('u')
+            ->where('u.avatar IS NOT NULL')
+            ->andWhere('u.nickname IS NOT NULL')
+            ->andWhere('u.cities IS NOT NULL')
             ->orderBy('u.createdAt', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
