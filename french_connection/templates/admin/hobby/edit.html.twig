@@ -1,17 +1,15 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Hello ServiceController!
+{% block title %}Hello HobbyController!
 {% endblock %}
 
 {% block body %}
-	<h2>Modification d'un service</h2>
-	
+	<h2>Modification d'un hobby</h2>
+    
  	{{ form_start(form) }}
     	{{ form_label(form.name)}}
     	{{ form_widget(form.name)}}
-		{{ form_row(form.createdAt)}}
-		{{ form_row(form.updatedAt)}}
- 	<button class="btn btn-info">Modifier</button>
+ 	<button class="btn btn-info">Ajouter</button>
 	{{ form_end(form) }}
-
+    
 {% endblock %}

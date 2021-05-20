@@ -1,0 +1,10 @@
+
+
+.boxes{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+nav{
+    background-color: red;
+}

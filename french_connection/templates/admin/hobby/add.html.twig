@@ -1,0 +1,15 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Hello HobbyController!
+{% endblock %}
+
+{% block body %}
+	<h2>Ajout d'un hobby</h2>
+    
+ 	{{ form_start(form) }}
+    	{{ form_label(form.name)}}
+    	{{ form_widget(form.name)}}
+ 	<button class="btn btn-info">Ajouter</button>
+	{{ form_end(form) }}
+
+{% endblock %}
