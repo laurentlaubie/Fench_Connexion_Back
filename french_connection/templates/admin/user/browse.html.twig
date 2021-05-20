@@ -3,18 +3,19 @@
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-    <h2>Liste des utilisateurs</h2>
+    <h2 class="m-3">Liste des utilisateurs</h2>
 
-    <a href="{{ path('admin_user_add') }}" class="btn btn-primary">Ajouter un utilisateur</a>
+    <a href="{{ path('admin_user_add') }}" class="btn btn-primary m-3">Ajouter un utilisateur</a>
 
-        <div class="boxes">
-    {% for user in users %}
-            <div class="card bg-light mb-3" style="max-width: 20rem;">
-                <div class="card-header">{{ user.nickname }}
-                <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-warning">Modifier</a>
+    <div class="boxes">
+        {% for user in users %}
+            <div class="card bg-light m-3" style="width: 20rem;">
+                <div class="card-header d-flex">
+                <div class="mr-auto p-2"><p>{{ user.nickname }}</p></div>
+                <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-warning p-2 m-1">Modifier</a>
                 <form action="{{ path('admin_user_delete', {'id': user.id}) }}" method="post" class="d-inline">
-                            <button class="btn btn-danger">Supprimer</button>
-                            <input type="hidden" name="_method" value="delete">
+                        <button class="btn btn-danger p-2 m-1">Supprimer</button>
+                        <input type="hidden" name="_method" value="delete">
                 </form>
                 </div>
                 <div class="card-body">
@@ -22,6 +23,6 @@
                 <p class="card-text">{{ user.biography }}</p>
                 </div>
             </div>
-    {% endfor %}
-        </div>
+        {% endfor %}
+    </div>
 {% endblock %}

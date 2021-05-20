@@ -6,9 +6,9 @@
 {% block body %}
 	<h2>Ajout d'un service</h2>
 	
+	{% form_theme form 'bootstrap_4_layout.html.twig' %}
 	{{ form_start(form) }}
-	{{ form_widget(form) }}
-    	
+	{{ form_widget(form) }}	
  	<button class="btn btn-info">Ajouter</button>
 	{{ form_end(form) }}
 	
