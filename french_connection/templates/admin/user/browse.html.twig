@@ -9,7 +9,7 @@
 
     <div class="boxes">
         {% for user in users %}
-            <div class="card bg-light  m-3" style="width: 20rem;">
+            <div class="card bg-light m-3" style="width: 20rem;">
                 <div class="card-header d-flex">
                 <div class="mr-auto p-2"><p>{{ user.nickname }}</p></div>
                 <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-warning p-2 m-1">Modifier</a>
