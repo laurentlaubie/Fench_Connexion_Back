@@ -97,11 +97,19 @@ class UserController extends AbstractController
     /**
      * @Route("/avatar/{id}", name="avatar_add", methods={"POST"}, requirements={"id": "\d+"})
      */
-    public function addAvatar(User $user, Request $request, AvatarUploader $avatarUploader): Response
+    public function addAvatar(User $user, Request $request, AvatarUploader $avatarUploader, FileSystem $filesystem): Response
     {
         $this->denyAccessUnlessGranted('addAvatar', $user);
 
         $userId = $user->getId();
+
+        $userAvatar = $user->getAvatar();
+
+        if ($userAvatar != NULL) {
+            $targetDirectory = $_ENV['AVATAR_PICTURE'];
+            $path = $targetDirectory . '/' . $userAvatar;
+            $filesystem->remove($path);
+        }
 
         $uploadedFile = $request->files->get('avatar');
 
