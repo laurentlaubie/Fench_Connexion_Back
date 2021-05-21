@@ -109,6 +109,8 @@ class UserController extends AbstractController
 
         $user->setAvatar($newFileName);
 
+        $user->setUpdatedAt(new \DateTime());
+
         $this->getDoctrine()->getManager()->flush();
 
         return $this->json($user, 200, [], [
@@ -163,6 +165,7 @@ class UserController extends AbstractController
                     return $this->json('the 2 passwords are differents', 404);
                 }
             }
+            $user->setUpdatedAt(new \DateTime());
             $this->getDoctrine()->getManager()->flush();
 
             return $this->json($user, 200, [], [
