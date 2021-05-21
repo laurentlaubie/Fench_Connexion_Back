@@ -1,15 +1,16 @@
 {% extends 'admin/base.html.twig' %}
 
-{% block title %}Hello ServiceController!
+{% block title %}Ajout d'un service
 {% endblock %}
 
 {% block body %}
-	<h2>Ajout d'un service</h2>
+	<h2 class="m-3">Ajout d'un service</h2>
 	
 	{% form_theme form 'bootstrap_4_layout.html.twig' %}
-	{{ form_start(form) }}
-	{{ form_widget(form) }}	
- 	<button class="btn btn-info">Ajouter</button>
-	{{ form_end(form) }}
-	
+	<div class="form m-3" style="width: 20rem;">
+		{{ form_start(form) }}
+		{{ form_widget(form) }}	
+		<button class="btn btn-info">Ajouter</button>
+		{{ form_end(form) }}
+	</div>
 {% endblock %}
