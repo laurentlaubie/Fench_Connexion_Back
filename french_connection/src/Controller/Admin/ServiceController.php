@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Service;
-use App\Form\Admin\ServiceType;
+use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
