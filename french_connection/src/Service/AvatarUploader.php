@@ -8,7 +8,9 @@ class AvatarUploader
 {
     public function rename(UploadedFile $image, $userId)
     {
-        return 'avatarUser' . $userId . '.' . $image->guessExtension();
+        //todo : rename upload files
+        //return 'avatarUser' . $userId . '.' . $image->guessExtension();
+        return uniqid() . '.' . $image->guessExtension();
     }
 
     public function upload(?UploadedFile $image, $userId)
